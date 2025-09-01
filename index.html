@@ -197,18 +197,22 @@
         let selectedCandidate = '';
         const ADMIN_PASSWORD = 'admin123'; // Change this to your secure password
         
-        // Initialize voting data if not exists
-        function initializeVotingData() {
-            if (!localStorage.getItem('votes')) {
-                localStorage.setItem('votes', JSON.stringify({
-                    'Abhinav Singh Rajput': 0,
-                    'Parth Tyyagi': 0
-                }));
-            }
-            if (!localStorage.getItem('votedStudents')) {
-                localStorage.setItem('votedStudents', JSON.stringify([]));
-            }
-        }
+       // Initialize voting data if not exists
+function initializeVotingData() {
+    if (!localStorage.getItem('votes')) {
+        localStorage.setItem('votes', JSON.stringify({
+            'Abhinav Singh Rajput': 0,
+            'Parth Tyyagi': 0
+        }));
+    }
+    if (!localStorage.getItem('votedStudents')) {
+        localStorage.setItem('votedStudents', JSON.stringify([]));
+    }
+    // Initialize detailed vote records array
+    if (!localStorage.getItem('voteRecords')) {
+        localStorage.setItem('voteRecords', JSON.stringify([]));
+    }
+}
         
         // Show specific page
         function showPage(pageId) {
@@ -348,6 +352,7 @@
 </body>
 
 </html>
+
 
 
 
