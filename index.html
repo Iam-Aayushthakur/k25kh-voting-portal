@@ -271,8 +271,8 @@
         }
         
         // Submit vote
-        function submitVote() {
-            // Update vote count
+      function submitVote() {
+    // Update vote count
     const votes = JSON.parse(localStorage.getItem('votes'));
     if (votes.hasOwnProperty(selectedCandidate)) {
         votes[selectedCandidate]++;
@@ -348,5 +348,6 @@
 </body>
 
 </html>
+
 
 
