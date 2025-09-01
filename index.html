@@ -196,6 +196,44 @@
         let rollNumber = '';
         let selectedCandidate = '';
         const ADMIN_PASSWORD = 'admin123'; // Change this to your secure password
+       function exportVotes() {
+    const password = document.getElementById('admin-password').value;
+    if (password !== ADMIN_PASSWORD) {
+        alert('Incorrect password. Only authorized administrators can export vote records.');
+        return;
+    }
+    
+    const voteRecords = JSON.parse(localStorage.getItem('voteRecords') || '[]');
+    if (voteRecords.length === 0) {
+        alert('No vote records found.');
+        return;
+    }
+    
+    // CSV header
+    const header = ['Name', 'Roll Number', 'Candidate', 'Timestamp'];
+    const rows = voteRecords.map(record => [
+        `"${record.name.replace(/"/g, '""')}"`,
+        `"${record.rollNumber.replace(/"/g, '""')}"`,
+        `"${record.candidate.replace(/"/g, '""')}"`,
+        `"${new Date(record.timestamp).toLocaleString()}"`
+    ]);
+    
+    // Combine header and rows
+    const csvContent = [header, ...rows].map(e => e.join(',')).join('\n');
+    
+    // Create Blob and download link
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'vote_records.csv');
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
         
        // Initialize voting data if not exists
 function initializeVotingData() {
@@ -208,7 +246,6 @@ function initializeVotingData() {
     if (!localStorage.getItem('votedStudents')) {
         localStorage.setItem('votedStudents', JSON.stringify([]));
     }
-    // Initialize detailed vote records array
     if (!localStorage.getItem('voteRecords')) {
         localStorage.setItem('voteRecords', JSON.stringify([]));
     }
@@ -248,6 +285,46 @@ function initializeVotingData() {
             
             return valid;
         }
+
+function exportVotes() {
+    const password = document.getElementById('admin-password').value;
+    if (password !== ADMIN_PASSWORD) {
+        alert('Incorrect password. Only authorized administrators can export vote records.');
+        return;
+    }
+    
+    const voteRecords = JSON.parse(localStorage.getItem('voteRecords') || '[]');
+    if (voteRecords.length === 0) {
+        alert('No vote records found.');
+        return;
+    }
+    
+    // CSV header
+    const header = ['Name', 'Roll Number', 'Candidate', 'Timestamp'];
+    const rows = voteRecords.map(record => [
+        `"${record.name.replace(/"/g, '""')}"`,
+        `"${record.rollNumber.replace(/"/g, '""')}"`,
+        `"${record.candidate.replace(/"/g, '""')}"`,
+        `"${new Date(record.timestamp).toLocaleString()}"`
+    ]);
+    
+    // Combine header and rows
+    const csvContent = [header, ...rows].map(e => e.join(',')).join('\n');
+    
+    // Create Blob and download link
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'vote_records.csv');
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
         
         // Login function
         function login() {
@@ -352,6 +429,7 @@ function initializeVotingData() {
 </body>
 
 </html>
+
 
 
 
