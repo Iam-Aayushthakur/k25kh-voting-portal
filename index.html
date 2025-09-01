@@ -268,24 +268,34 @@
         // Submit vote
         function submitVote() {
             // Update vote count
-            const votes = JSON.parse(localStorage.getItem('votes'));
-            if (votes.hasOwnProperty(selectedCandidate)) {
-                votes[selectedCandidate]++;
-            } else {
-                votes[selectedCandidate] = 1;
-            }
-            localStorage.setItem('votes', JSON.stringify(votes));
-            
-            // Mark this student as voted
-            const votedStudents = JSON.parse(localStorage.getItem('votedStudents'));
-            const studentId = studentName.toLowerCase() + '|' + rollNumber.toLowerCase();
-            votedStudents.push(studentId);
-            localStorage.setItem('votedStudents', JSON.stringify(votedStudents));
-            
-            // Show thank you page
-            document.getElementById('voted-candidate').textContent = selectedCandidate;
-            showPage('thankyou-page');
-        }
+    const votes = JSON.parse(localStorage.getItem('votes'));
+    if (votes.hasOwnProperty(selectedCandidate)) {
+        votes[selectedCandidate]++;
+    } else {
+        votes[selectedCandidate] = 1;
+    }
+    localStorage.setItem('votes', JSON.stringify(votes));
+    
+    // Mark this student as voted
+    const votedStudents = JSON.parse(localStorage.getItem('votedStudents'));
+    const studentId = studentName.toLowerCase() + '|' + rollNumber.toLowerCase();
+    votedStudents.push(studentId);
+    localStorage.setItem('votedStudents', JSON.stringify(votedStudents));
+    
+    // Save detailed vote record
+    let voteRecords = JSON.parse(localStorage.getItem('voteRecords') || '[]');
+    voteRecords.push({
+        name: studentName,
+        rollNumber: rollNumber,
+        candidate: selectedCandidate,
+        timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('voteRecords', JSON.stringify(voteRecords));
+    
+    // Show thank you page
+    document.getElementById('voted-candidate').textContent = selectedCandidate;
+    showPage('thankyou-page');
+}
         
         // View results with password
         function viewResults() {
@@ -333,3 +343,4 @@
 </body>
 
 </html>
+
