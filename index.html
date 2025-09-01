@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>K25KH 2025 Class Representative Voting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .page { display: none; }
+        .active { display: block; }
+        .candidate-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .candidate-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .vote-btn { transition: all 0.3s ease; }
+        .vote-btn:hover { transform: scale(1.05); }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans">
+    <!-- Welcome Page -->
+    <div id="welcome-page" class="page active fade-in">
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="text-center mb-12">
+                <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                    <img src="https://placehold.co/800x400/3B82F6/FFFFFF?text=K25KH+2025+Elections&font=montserrat" alt="K25KH 2025 Class Representative Election Banner with academic theme" class="w-full h-64 object-cover rounded-xl mb-6 mx-auto" />
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">K25KH 2025 Class Representative Elections</h1>
+                    <p class="text-xl text-gray-600 mb-8">Your vote matters! Choose the right candidate to represent your class.</p>
+                    <div class="bg-blue-50 rounded-xl p-6 mb-8">
+                        <h2 class="text-2xl font-semibold text-blue-800 mb-4">Voting Guidelines</h2>
+                        <ul class="text-left text-gray-700 space-y-2">
+                            <li>• One vote per student (verified by name and roll number)</li>
+                            <li>• Voting is anonymous and secure</li>
+                            <li>• Results will be password-protected</li>
+                            <li>• Choose wisely - your representative will serve for the academic year</li>
+                        </ul>
+                    </div>
+                    <button onclick="showPage('login-page')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                        Start Voting Process
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page fade-in">
+        <div class="max-w-md mx-auto p-6">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="text-center mb-6">
+                    <div class="w-32 h-32 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
+                        <span class="text-4xl">📝</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Student Verification</h2>
+                    <p class="text-gray-600">Enter your Name and Roll Number to proceed</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2" for="student-name">Name</label>
+                        <input type="text" id="student-name" placeholder="Enter your full name" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                        <p id="name-error" class="text-red-500 text-sm mt-1 hidden">Please enter your name</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2" for="roll-number">Roll Number</label>
+                        <input type="text" id="roll-number" placeholder="Enter your roll number" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                        <p id="roll-error" class="text-red-500 text-sm mt-1 hidden">Please enter your roll number</p>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button onclick="showPage('welcome-page')" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-4 rounded-lg transition-colors">
+                            Back
+                        </button>
+                        <button id="login-btn" onclick="login()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition-colors">
+                            Proceed
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Candidates Page -->
+    <div id="candidates-page" class="page fade-in">
+        <div class="max-w-6xl mx-auto p-6">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Meet the Candidates</h2>
+                <p class="text-gray-600">Select your preferred Class Representative</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+               <!-- Candidate 1 -->
+               <div class="candidate-card bg-white rounded-xl shadow-lg p-6 text-center">
+                  <img src="images/abhinav.jpg" alt="Abhinav Singh Rajput" class="w-32 h-32 mx-auto mb-4 rounded-full object-cover" />
+                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Abhinav Singh Rajput</h3>
+                 <p class="text-gray-600 mb-4">"Building a connected classroom community"</p>
+                 <button onclick="selectCandidate('Abhinav Singh Rajput')" class="vote-btn bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full transition-all">
+                 Vote for Abhinav
+                 </button>
+               </div>
+                
+                <!-- Candidate 2 -->
+                <div class="candidate-card bg-white rounded-xl shadow-lg p-6 text-center">
+                  <img src="images/parth.jpg" alt="Parth Tyyagi" class="w-32 h-32 mx-auto mb-4 rounded-full object-cover" />
+                  <h3 class="text-xl font-semibold text-gray-800 mb-2">Parth Tyyagi</h3>
+                  <p class="text-gray-600 mb-4">"Your voice, our collective strength"</p>
+                  <button onclick="selectCandidate('Parth Tyyagi')" class="vote-btn bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full transition-all">
+                   Vote for Parth 
+                  </button>
+                </div>
+                
+            </div>
+            
+            <div class="text-center">
+                <button onclick="showPage('login-page')" class="bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-lg">
+                    Back to Login
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Page -->
+    <div id="confirmation-page" class="page fade-in">
+        <div class="max-w-2xl mx-auto p-6">
+            <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
+                <div class="w-32 h-32 mx-auto mb-6 bg-green-100 rounded-full flex items-center justify-center">
+                    <span class="text-4xl">✓</span>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Confirm Your Vote</h2>
+                <p class="text-gray-600 mb-6">You are about to vote for:</p>
+                
+                <div class="bg-blue-50 rounded-xl p-6 mb-6">
+                    <h3 id="selected-candidate" class="text-xl font-semibold text-blue-800"></h3>
+                    <p class="text-sm text-blue-600 mt-2">This action cannot be undone</p>
+                </div>
+                
+                <div class="flex space-x-4 justify-center">
+                    <button onclick="showPage('candidates-page')" class="bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-lg">
+                        Change Vote
+                    </button>
+                    <button onclick="submitVote()" class="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg">
+                        Confirm Vote
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thank You Page -->
+    <div id="thankyou-page" class="page fade-in">
+        <div class="max-w-2xl mx-auto p-6">
+            <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
+                <div class="w-32 h-32 mx-auto mb-6 bg-green-100 rounded-full flex items-center justify-center">
+                    <span class="text-4xl">🎉</span>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Thank You for Voting!</h2>
+                <p class="text-gray-600 mb-6">Your vote has been recorded successfully.</p>
+                
+                <div class="bg-green-50 rounded-xl p-6 mb-6">
+                    <h3 class="text-xl font-semibold text-green-800 mb-2">Vote Confirmed</h3>
+                    <p class="text-green-600">Your vote for <strong id="voted-candidate"></strong> has been submitted.</p>
+                </div>
+                
+                <div class="bg-yellow-50 rounded-xl p-4 mb-6">
+                    <h4 class="font-semibold text-yellow-800 mb-2">View Results (Admin Only)</h4>
+                    <div class="flex space-x-2">
+                        <input type="password" id="admin-password" placeholder="Enter admin password" 
+                               class="flex-1 px-3 py-2 border border-gray-300 rounded-lg" />
+                        <button onclick="viewResults()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                            View
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="results-section" class="hidden mt-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Election Results</h3>
+                    <div id="vote-results" class="space-y-3 text-left"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let studentName = '';
+        let rollNumber = '';
+        let selectedCandidate = '';
+        const ADMIN_PASSWORD = 'admin123'; // Change this to your secure password
+        
+        // Initialize voting data if not exists
+        function initializeVotingData() {
+            if (!localStorage.getItem('votes')) {
+                localStorage.setItem('votes', JSON.stringify({
+                    'Abhinav Singh Rajput': 0,
+                    'Parth Tyyagi': 0
+                }));
+            }
+            if (!localStorage.getItem('votedStudents')) {
+                localStorage.setItem('votedStudents', JSON.stringify([]));
+            }
+        }
+        
+        // Show specific page
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        
+        // Validate login inputs
+        function validateLogin() {
+            const nameInput = document.getElementById('student-name');
+            const rollInput = document.getElementById('roll-number');
+            const nameError = document.getElementById('name-error');
+            const rollError = document.getElementById('roll-error');
+            
+            let valid = true;
+            
+            if (!nameInput.value.trim()) {
+                nameError.classList.remove('hidden');
+                valid = false;
+            } else {
+                nameError.classList.add('hidden');
+            }
+            
+            if (!rollInput.value.trim()) {
+                rollError.classList.remove('hidden');
+                valid = false;
+            } else {
+                rollError.classList.add('hidden');
+            }
+            
+            return valid;
+        }
+        
+        // Login function
+        function login() {
+            if (!validateLogin()) return;
+            
+            studentName = document.getElementById('student-name').value.trim();
+            rollNumber = document.getElementById('roll-number').value.trim();
+            
+            // Check if this student has already voted
+            const votedStudents = JSON.parse(localStorage.getItem('votedStudents') || '[]');
+            const studentId = studentName.toLowerCase() + '|' + rollNumber.toLowerCase();
+            if (votedStudents.includes(studentId)) {
+                alert('You have already voted. Each student can vote only once.');
+                return;
+            }
+            
+            showPage('candidates-page');
+        }
+        
+        // Select candidate
+        function selectCandidate(candidate) {
+            selectedCandidate = candidate;
+            document.getElementById('selected-candidate').textContent = candidate;
+            showPage('confirmation-page');
+        }
+        
+        // Submit vote
+        function submitVote() {
+            // Update vote count
+            const votes = JSON.parse(localStorage.getItem('votes'));
+            if (votes.hasOwnProperty(selectedCandidate)) {
+                votes[selectedCandidate]++;
+            } else {
+                votes[selectedCandidate] = 1;
+            }
+            localStorage.setItem('votes', JSON.stringify(votes));
+            
+            // Mark this student as voted
+            const votedStudents = JSON.parse(localStorage.getItem('votedStudents'));
+            const studentId = studentName.toLowerCase() + '|' + rollNumber.toLowerCase();
+            votedStudents.push(studentId);
+            localStorage.setItem('votedStudents', JSON.stringify(votedStudents));
+            
+            // Show thank you page
+            document.getElementById('voted-candidate').textContent = selectedCandidate;
+            showPage('thankyou-page');
+        }
+        
+        // View results with password
+        function viewResults() {
+            const password = document.getElementById('admin-password').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                const votes = JSON.parse(localStorage.getItem('votes'));
+                const resultsContainer = document.getElementById('vote-results');
+                const resultsSection = document.getElementById('results-section');
+                
+                resultsContainer.innerHTML = '';
+                
+                // Calculate total votes
+                const totalVotes = Object.values(votes).reduce((sum, vote) => sum + vote, 0);
+                
+                Object.entries(votes).forEach(([candidate, voteCount]) => {
+                    const percentage = totalVotes > 0 ? ((voteCount / totalVotes) * 100).toFixed(1) : 0;
+                    const progressWidth = totalVotes > 0 ? (voteCount / totalVotes) * 100 : 0;
+                    
+                    const resultHTML = `
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">${candidate}</span>
+                                <span class="text-blue-600 font-bold">${voteCount} votes (${percentage}%)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: ${progressWidth}%"></div>
+                            </div>
+                        </div>
+                    `;
+                    resultsContainer.innerHTML += resultHTML;
+                });
+                
+                resultsSection.classList.remove('hidden');
+            } else {
+                alert('Incorrect password. Only authorized administrators can view results.');
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeVotingData();
+        });
+    </script>
+</body>
+</html>
